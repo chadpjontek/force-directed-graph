@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import './flags.css'
+import { status, json, makeGraph } from './helpers.js'
 
 class App extends Component {
+  componentDidMount() {
+    // get json data and make graph
+    fetch(
+      "https://raw.githubusercontent.com/DealPete/forceDirected/master/countries.json"
+    )
+      .then(status)
+      .then(json)
+      .then(data => {
+        makeGraph(data);
+      });
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>National Contiguity Force Directed Graph</h1>
+        <div className="svg-container">
+          <div className="flag-container"></div>
+        </div>
       </div>
     );
   }
